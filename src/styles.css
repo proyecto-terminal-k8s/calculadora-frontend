@@ -61,10 +61,14 @@ button { font: inherit; }
 .calc-key:hover:not(:disabled) { background: var(--low); transform: translateY(-1px); }
 .calc-key:active:not(:disabled) { transform: translateY(1px); }
 .calc-key:disabled { opacity: .58; cursor: wait; }
+.calc-key .material-symbols-outlined { vertical-align: middle; }
+.calc-key .divide-icon { font-size: 24px; }
+.calc-key .backspace-icon { font-size: 20px; }
+.calc-key .equals-icon { font-size: 26px; font-weight: 700; }
 .calc-key.utility, .calc-key.operator { background: var(--high); color: var(--secondary); }
 .calc-key.utility { font-weight: 600; }
 .calc-key.selected { outline: 2px solid var(--primary); outline-offset: -3px; }
-.calc-key.equals { color: white; background: var(--primary); font-size: 28px; font-weight: 600; box-shadow: 0 8px 14px rgb(0 98 161 / 18%); }
+.calc-key.equals { grid-column: span 2; color: white; background: var(--primary); font-size: 28px; font-weight: 600; box-shadow: 0 8px 14px rgb(0 98 161 / 18%); }
 .calc-key.equals:hover:not(:disabled) { background: #004f83; }
 .calculator-footnote { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: #78808e; font-size: 12px; font-weight: 500; letter-spacing: .02em; }
 .calculator-footnote span:first-child { display: flex; align-items: center; gap: 6px; }

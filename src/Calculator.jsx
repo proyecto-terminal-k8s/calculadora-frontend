@@ -4,26 +4,25 @@ import { calculate, checkApiHealth } from './api.js';
 const symbols = { '+': '+', '-': '−', '*': '×', '/': '÷' };
 
 const keys = [
-  { label: 'AC', action: 'clear', kind: 'utility' },
-  { label: '±', action: 'sign', kind: 'utility' },
-  { label: '%', action: 'percent', kind: 'utility' },
-  { label: '÷', action: 'operator', value: '/', kind: 'operator' },
+  { label: 'AC', action: 'clear', kind: 'utility', ariaLabel: 'Borrar todo' },
+  { label: '±', action: 'sign', kind: 'utility', ariaLabel: 'Cambiar signo' },
+  { label: '⌫', action: 'backspace', kind: 'utility', icon: 'backspace', iconClass: 'backspace-icon', ariaLabel: 'Borrar último dígito' },
+  { label: '÷', action: 'operator', value: '/', kind: 'operator', icon: 'device_hub', iconClass: 'divide-icon', ariaLabel: 'Dividir' },
   { label: '7', action: 'digit' },
   { label: '8', action: 'digit' },
   { label: '9', action: 'digit' },
-  { label: '×', action: 'operator', value: '*', kind: 'operator' },
+  { label: '×', action: 'operator', value: '*', kind: 'operator', ariaLabel: 'Multiplicar' },
   { label: '4', action: 'digit' },
   { label: '5', action: 'digit' },
   { label: '6', action: 'digit' },
-  { label: '−', action: 'operator', value: '-', kind: 'operator' },
+  { label: '−', action: 'operator', value: '-', kind: 'operator', ariaLabel: 'Restar' },
   { label: '1', action: 'digit' },
   { label: '2', action: 'digit' },
   { label: '3', action: 'digit' },
-  { label: '+', action: 'operator', value: '+', kind: 'operator' },
-  { label: '⌫', action: 'backspace', kind: 'utility' },
+  { label: '+', action: 'operator', value: '+', kind: 'operator', ariaLabel: 'Sumar' },
   { label: '0', action: 'digit' },
-  { label: '.', action: 'decimal' },
-  { label: '=', action: 'equals', kind: 'equals' },
+  { label: '.', action: 'decimal', ariaLabel: 'Punto decimal' },
+  { label: '=', action: 'equals', kind: 'equals', icon: 'equal', iconClass: 'equals-icon', ariaLabel: 'Igual' },
 ];
 
 function formatNumber(value) {
@@ -157,11 +156,6 @@ export default function Calculator() {
         setStartNewNumber(false);
         setError('');
         break;
-      case 'percent':
-        setCurrent((value) => value === 'Error' ? value : String(Number(value) / 100));
-        setStartNewNumber(false);
-        setError('');
-        break;
       case 'backspace':
         setCurrent((value) => value === 'Error' || startNewNumber ? '0' : value.length > 1 ? value.slice(0, -1) : '0');
         setStartNewNumber(false);
@@ -259,9 +253,9 @@ export default function Calculator() {
                   key={`${key.action}-${key.label}`}
                   onClick={() => handleAction(key)}
                   disabled={busy}
-                  aria-label={key.label === '⌫' ? 'Borrar último dígito' : key.label}
+                  aria-label={key.ariaLabel || key.label}
                 >
-                  {key.label}
+                  {key.icon ? <AppIcon className={key.iconClass}>{key.icon}</AppIcon> : key.label}
                 </button>
               ))}
             </div>
