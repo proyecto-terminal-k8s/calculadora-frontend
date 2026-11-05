@@ -3,9 +3,13 @@ server {
     server_name _;
     root /usr/share/nginx/html;
     index index.html;
+    resolver kube-dns.kube-system.svc.cluster.local valid=30s ipv6=off;
+
+    set $backend_host "${API_HOST}";
+    set $backend_port "${API_PORT}";
 
     location /api/ {
-        proxy_pass http://${API_HOST}:${API_PORT};
+        proxy_pass http://$backend_host:$backend_port$request_uri;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -14,7 +18,7 @@ server {
     }
 
     location = /health {
-        proxy_pass http://${API_HOST}:${API_PORT}/health;
+        proxy_pass http://$backend_host:$backend_port/health;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
